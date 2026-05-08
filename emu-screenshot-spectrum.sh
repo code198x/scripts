@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 # Capture a ZX Spectrum screenshot using the Emu198x emulator.
 #
-# Loads a snapshot or tape file, advances N frames, then writes a
-# PNG screenshot to the output path. Uses the script bin's fast
-# path for one-line operation.
+# TODO(track-1b-followup): this script targets a CLI shape that was
+# never implemented (`--model 48k`, positional input). It was broken
+# before the script-binary consolidation too. Replace its body with
+# a JSON-script call to the consolidated `emu198x-spectrum` binary
+# (see code-samples/scripts/capture-spectrum-screenshot.sh for the
+# pattern) before the next time anyone tries to run this. Until then
+# it'll fail loudly on the unsupported `--model` flag.
 #
 # Usage: ./emu-screenshot-spectrum.sh <input.sna|.tap|.tzx|.z80> <output.png> [--frames N] [--model MODEL]
 
 set -euo pipefail
 
-EMU="${EMU_SPECTRUM:-/Users/stevehill/Projects/Emu198x/target/release/emu198x-script-spectrum}"
+EMU="${EMU_SPECTRUM:-/Users/stevehill/Projects/Emu198x/target/release/emu198x-spectrum}"
 INPUT="${1:?Usage: $0 <input> <output.png> [--frames N] [--model MODEL]}"
 OUTPUT="${2:?Usage: $0 <input> <output.png> [--frames N] [--model MODEL]}"
 FRAMES=250

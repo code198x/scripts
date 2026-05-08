@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 # Capture a ZX Spectrum video using the Emu198x emulator.
 #
-# Loads a snapshot or tape file, advances `--wait` frames to reach a
-# steady state, then records `--frames` worth of video to an MP4
-# file. ffmpeg must be on PATH.
+# TODO(track-1b-followup): this script targets a `record_video` JSON
+# step that doesn't exist in the ScriptStep vocabulary. It was broken
+# before the script-binary consolidation too. Either add a
+# `record_video` ScriptStep to emu198x-shell or rewrite this to drive
+# the binary frame-by-frame and pipe to ffmpeg externally. Until then
+# it'll fail loudly on the unrecognised JSON action.
 #
 # Usage: ./emu-video-spectrum.sh <input.sna|.tap|.tzx|.z80> <output.mp4> [--wait N] [--frames N] [--model MODEL]
 
 set -euo pipefail
 
-EMU="${EMU_SPECTRUM:-/Users/stevehill/Projects/Emu198x/target/release/emu198x-script-spectrum}"
+EMU="${EMU_SPECTRUM:-/Users/stevehill/Projects/Emu198x/target/release/emu198x-spectrum}"
 INPUT="${1:?Usage: $0 <input> <output.mp4> [--wait N] [--frames N] [--model MODEL]}"
 OUTPUT="${2:?Usage: $0 <input> <output.mp4> [--wait N] [--frames N] [--model MODEL]}"
 WAIT=250
